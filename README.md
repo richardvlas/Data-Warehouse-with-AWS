@@ -12,4 +12,17 @@ In this project, we'll apply the knowleadge on data warehouses and AWS to build 
 ## Project Structure
 The project includes the following files and folders:
 
+TODO: Add folder tree
+
+
+- `README.md` - a markdown file giving an overview of the project and explaining the project structure.
+- `create_table.py` - creates fact and dimension tables for the star schema in `Redshift`.
+- `etl.py` - script connects to the Sparkify redshift database, loads `log_data` and `song_data` from `S3` into staging tables on `Redshift`, and transforms/process that data into the five analytics tables on `Redshift`.
+
+- `sql_queries.py` is where we define SQL statements, which will be imported into the two other files above.
+
+
+## Project Datasets
+
+
 
