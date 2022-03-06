@@ -90,7 +90,18 @@ Using the song and event datasets, we create a star schema optimized for queries
 - `time` - timestamps of records in `songplays` broken down into specific units
   - *start_time, hour, day, week, month, year, weekday*
 
+## Project Steps
+
+Create the following environmental variables to enable access to AWS:
+
+```bash
+export AWS_ACCESS_KEY_ID=<replace with your access key id>
+export AWS_SECRET_ACCESS_KEY=<replace with your secret access key>
+```
 
 
+### Redshift Cluster
+
+### ETL Pipeline
 
 
