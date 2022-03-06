@@ -63,6 +63,34 @@ And below is an example of what the data in a log file, `2018-11-12-events.json`
 {"artist":null,"auth":"Logged In","firstName":"Maia","gender":"F","itemInSession":0,"lastName":"Burke","length":null,"level":"free","location":"Houston-The Woodlands-Sugar Land, TX","method":"GET","page":"Home","registration":1540676534796.0,"sessionId":510,"song":null,"status":200,"ts":1542071524796,"userAgent":"\"Mozilla\/5.0 (Windows NT 6.3; WOW64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/36.0.1985.143 Safari\/537.36\"","userId":"51"}
 ```
 
-## Data Modelling
-
 ## Database Schema 
+### Staging tables
+We will first load `log_data` and `song_data` into two staging tables, which will be later on transforms them into the final five database tables. The staging tables are the following:
+
+- `staging_songs` - Data about songs and the artists of those songs 
+- `staging_logs` - activity logs of users
+
+### Staging tables
+Using the song and event datasets, we create a star schema optimized for queries on song play analysis. This includes the following tables.
+
+**Fact Table**
+- `songplays` - records in event data associated with song plays i.e. records with page NextSong 
+  - *songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent*
+ 
+**Dimension Tables**
+- `users` - users in the app
+  - *user_id, first_name, last_name, gender, level*
+
+- `songs` - songs in music database
+  - *song_id, title, artist_id, year, duration*
+ 
+- `artists` - artists in music database
+  - *artist_id, name, location, lattitude, longitude*
+
+- `time` - timestamps of records in `songplays` broken down into specific units
+  - *start_time, hour, day, week, month, year, weekday*
+
+
+
+
+
