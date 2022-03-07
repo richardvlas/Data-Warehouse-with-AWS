@@ -109,7 +109,15 @@ An alternative way using a config file `dwh.cfg` containing all config parameter
 - Create a `RedShift Cluster` - once created, save the cluster endpoint `DWH_ENDPOINT` and role `DWH_ROLE_ARN` in the config file
 - Open an incoming `TCP` port to access the cluster ednpoint
 
-
 ### ETL Pipeline
+- Loading data from `S3` to staging tables on `Redshift`.
+- Loading data from staging tables to analytics tables on `Redshift`
 
+### Cleaning Resources
+If we don't need the implemented DWH and would like to delete all relevant resources, type the following command:
 
+```bash
+python redshift_cluster.py delete
+```
+
+This will delete the IAM role as weel as the Redshift cluster.
