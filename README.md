@@ -106,6 +106,7 @@ An alternative way using a config file `dwh.cfg` containing all config parameter
 - Create clients for `IAM`, `EC2`, `S3` and `Redshift`
 - Create `IAM Role` - Create an IAM Role that makes Redshift able to access S3 bucket (ReadOnly) which is done attaching the specified ReadOnly policy
 - Create a `RedShift Cluster` - once created, save the cluster endpoint `DWH_ENDPOINT` and role `DWH_ROLE_ARN` in the config file
+- Open an incoming `TCP` port to access the cluster ednpoint
 
 
 ### ETL Pipeline
