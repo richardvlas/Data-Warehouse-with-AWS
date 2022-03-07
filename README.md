@@ -122,6 +122,8 @@ An alternative way using a config file `dwh.cfg` containing all config parameter
 - Loading data from `S3` to staging tables on `Redshift`.
 - Loading data from staging tables to analytics tables on `Redshift`
 
+> Note: You can test by running `etl.py` after running `create_tables.py` and running the analytic queries on your Redshift database to compare your results with the expected results.
+
 ### Cleaning Resources
 If we don't need the implemented DWH and would like to delete all relevant resources, type the following command:
 
