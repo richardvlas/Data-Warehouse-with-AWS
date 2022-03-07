@@ -16,6 +16,7 @@ TODO: Add folder tree
 
 
 - `README.md` - a markdown file giving an overview of the project and explaining the project structure.
+- `redshift_cluster.py` - creates infrastructure (IAM role and cluster) as code
 - `create_table.py` - creates fact and dimension tables for the star schema in `Redshift`.
 - `etl.py` - script connects to the Sparkify redshift database, loads `log_data` and `song_data` from `S3` into staging tables on `Redshift`, and transforms/process that data into the five analytics tables on `Redshift`.
 
