@@ -12,14 +12,26 @@ In this project, we'll apply the knowleadge on data warehouses and AWS to build 
 ## Project Structure
 The project includes the following files and folders:
 
-TODO: Add folder tree
-
+```bash
+.
+├── README.md
+├── create_cluster.ipynb
+├── create_tables.py
+├── dwh.cfg
+├── etl.py
+├── images
+│   ├── AWS_IAM_1.png
+│   └── AWS_IAM_2.png
+├── redshift_cluster.py
+├── requirements.txt
+└── sql_queries.py
+```
 
 - `README.md` - a markdown file giving an overview of the project and explaining the project structure.
 - `redshift_cluster.py` - creates infrastructure (IAM role and cluster) as code
-- `create_table.py` - creates fact and dimension tables for the star schema in `Redshift`.
+- `create_tables.py` - creates fact and dimension tables for the star schema in `Redshift`.
+- `create_cluster.ipynb` - Jupyter notebook containing details of Infractructure as a code.
 - `etl.py` - script connects to the Sparkify redshift database, loads `log_data` and `song_data` from `S3` into staging tables on `Redshift`, and transforms/process that data into the five analytics tables on `Redshift`.
-
 - `sql_queries.py` - is where we define SQL statements, which will be imported into the two other files above.
 - `dwh.cfg` - configuration file for `IAM`, `S3` bucket and `Redshift` cluster.
 
