@@ -109,7 +109,26 @@ An alternative way using a config file `dwh.cfg` containing all config parameter
 - Create a `RedShift Cluster` - once created, save the cluster endpoint `DWH_ENDPOINT` and role `DWH_ROLE_ARN` in the config file
 - Open an incoming `TCP` port to access the cluster ednpoint
 
+### Create Table Schemas
+- Design schemas for your fact and dimension tables
+- Write a SQL `CREATE` statement for each of these tables in `sql_queries.py`
+- Complete the logic in `create_tables.py` to connect to the database and create these tables
+- Write SQL `DROP` statements to drop tables in the beginning of `create_tables.py` if the tables already exist. This way, you can run `create_tables.py` whenever you want to reset your database and test your ETL pipeline.
+- Launch a redshift cluster and create an `IAM` role that has read access to `S3`.
+- Add redshift database and `IAM` role info to `dwh.cfg`.
+- Test by running `create_tables.py` and checking the table schemas in your redshift database. You can use Query Editor in the AWS Redshift console for this.
 
 ### ETL Pipeline
+- Loading data from `S3` to staging tables on `Redshift`.
+- Loading data from staging tables to analytics tables on `Redshift`
 
+> Note: You can test by running `etl.py` after running `create_tables.py` and running the analytic queries on your Redshift database to compare your results with the expected results.
 
+### Cleaning Resources
+If we don't need the implemented DWH and would like to delete all relevant resources, type the following command:
+
+```bash
+python redshift_cluster.py delete
+```
+
+This will delete the IAM role as weel as the Redshift cluster.
