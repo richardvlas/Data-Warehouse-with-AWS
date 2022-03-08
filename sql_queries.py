@@ -9,11 +9,11 @@ config.read('dwh.cfg')
 
 staging_events_table_drop = "DROP TABLE IF EXISTS staging_events"
 staging_songs_table_drop = "DROP TABLE IF EXISTS staging_songs"
-songplay_table_drop = "DROP TABLE IF EXISTS songplay_table"
-user_table_drop = "DROP TABLE IF EXISTS user_table"
-song_table_drop = "DROP TABLE IF EXISTS song_table"
-artist_table_drop = "DROP TABLE IF EXISTS artist_table"
-time_table_drop = "DROP TABLE IF EXISTS time_table"
+songplay_table_drop = "DROP TABLE IF EXISTS songplays"
+user_table_drop = "DROP TABLE IF EXISTS users"
+song_table_drop = "DROP TABLE IF EXISTS songs"
+artist_table_drop = "DROP TABLE IF EXISTS artists"
+time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
 
@@ -21,38 +21,38 @@ staging_events_table_create= ("""
     CREATE TABLE staging_events(
         event_id INT IDENTITY(0,1) PRIMARY KEY,
         artist_name VARCHAR(255),
-        auth VARCHAR(32),
+        auth VARCHAR(255),
         user_first_name VARCHAR(255),
         user_last_name VARCHAR(255),
-        user_gender VARCHARD(32),
+        user_gender VARCHAR(255),
         item_in_session INTEGER,
         song_length DOUBLE PRECISION,
-        user_level VARCHAR(32),
-        location VARCHAR(100),
-        method VARCHAR(32),
-        page VARCHAR(32),
-        registration VARCHAR(32), 
+        user_level VARCHAR(255),
+        location VARCHAR(255),
+        method VARCHAR(255),
+        page VARCHAR(255),
+        registration VARCHAR(255), 
         session_id BIGINT,
         song_title VARCHAR(255),
         status INTEGER,
         ts BIGINT,
         user_agent TEXT,
-        user_id VARCHAR(128)
+        user_id VARCHAR(255)
     )
 """)
 
 staging_songs_table_create = ("""
     CREATE TABLE staging_songs(
-        song_id VARCHAR(100) PRIMARY KEY,
+        song_id VARCHAR(255) PRIMARY KEY,
         num_songs INTEGER,
-        artist_id VARCHAR(100),
+        artist_id VARCHAR(255),
         artist_latitude DOUBLE PRECISION,
         artist_longitude DOUBLE PRECISION,
         artist_location VARCHAR(255),
         artist_name VARCHAR(255),
         title VARCHAR(255),
         duration DOUBLE PRECISION,
-        year INTEGER,
+        year INTEGER
     )
 """)
 
@@ -60,43 +60,43 @@ songplay_table_create = ("""
     CREATE TABLE songplays(
         songplay_id INT IDENTITY(0,1) PRIMARY KEY,
         start_time TIMESTAMP,
-        user_id VARCHAR(100),
-        level VARCHAR(50),
-        song_id VARCHAR(100),
-        artist_id VARCHAR(100),
+        user_id VARCHAR(255),
+        level VARCHAR(255),
+        song_id VARCHAR(255),
+        artist_id VARCHAR(255),
         session_id BIGINT,
-        location VARCHAR(100),
-        user_agent TEXT,
+        location VARCHAR(255),
+        user_agent TEXT
     )
 """)
 
 user_table_create = ("""
     CREATE TABLE users(
-        user_id VARCHAR(100) PRIMARY KEY,
+        user_id VARCHAR(255) PRIMARY KEY,
         first_name VARCHAR(255),
         last_name VARCHAR(255),
-        gender VARCHARD(32),
-        level VARCHAR(50),
+        gender VARCHAR(255),
+        level VARCHAR(255)
     )
 """)
 
 song_table_create = ("""
     CREATE TABLE songs(
-        song_id VARCHAR(100) PRIMARY KEY,
+        song_id VARCHAR(255) PRIMARY KEY,
         title VARCHAR(255),
-        artist_id VARCHAR(100),
+        artist_id VARCHAR(255),
         year INTEGER,
-        duration DOUBLE PRECISION,
+        duration DOUBLE PRECISION
     )
 """)
 
 artist_table_create = ("""
     CREATE TABLE artists(
-        artist_id VARCHAR(100) PRIMARY KEY,
+        artist_id VARCHAR(255) PRIMARY KEY,
         name VARCHAR(255),
-        location VARCHAR(100),
+        location VARCHAR(255),
         latitude DOUBLE PRECISION,
-        longitude DOUBLE PRECISION,
+        longitude DOUBLE PRECISION
     )
 """)
 
@@ -108,7 +108,7 @@ time_table_create = ("""
         week INTEGER,
         month INTEGER,
         year INTEGER,
-        weekday INTEGER,
+        weekday INTEGER
     )
 """)
 
@@ -118,7 +118,8 @@ staging_events_copy = ("""
     COPY staging_events
     FROM {}
     IAM_ROLE {}
-    JSON {};
+    FORMAT AS JSON {}
+    region 'us-west-2';
 """).format(config.get('S3','LOG_DATA'), config.get('IAM_ROLE','DWH_ROLE_ARN'), config.get('S3','LOG_JSONPATH'))
 
 staging_songs_copy = ("""
@@ -126,7 +127,7 @@ staging_songs_copy = ("""
     FROM {}
     IAM_ROLE {}
     JSON 'auto';
-""").format(config.get('S3','SONG_DATA'), config.get('IAM_ROLE','ARN'))
+""").format(config.get('S3','SONG_DATA'), config.get('IAM_ROLE','DWH_IAM_ROLE_NAME'))
 
 # FINAL TABLES
 
@@ -143,7 +144,7 @@ songplay_table_insert = ("""
         se.user_agent
     FROM staging_events se
     INNER JOIN staging_songs ss ON ss.title = se.song
-    AND se.artist = so.artist_name
+    AND se.artist_name = so.artist_name
     WHERE se.page = 'NextSong';
 """)
 
